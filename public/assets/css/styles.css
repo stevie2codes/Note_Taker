@@ -7,6 +7,9 @@ html, body {
 .save-note {
   display: none;
 }
+.save-note:hover{
+  cursor: pointer;
+}
 
 .icons i {
   margin-left: 15px;

@@ -1,34 +1,39 @@
 const fs = require('fs');
 
-const db = require('../db/db.json');
+
+
 
 // console.log(db);
 
 module.exports = function(app){
-    app.get("/api/notes", function(req, res){ 
-       fs.readFile("db/db.json", (err, data) => {
-           if(err) throw err;
-           res.json(data);
-       })
-       res.json(data);
+    
+    app.get("/api/notes", (req, res) => {
+        console.log(res);
+        fs.readFile("db/db.json", (err, data) => {
+            if (err) throw err;
+
+            console.log(data);
+            res.json(JSON.parse(data));
+        });
     });
 
     app.post("/api/notes", function(req, res){
+        let userArray = [];
        let userNote = req.body;
        console.log(userNote);
 
        fs.readFile("db/db.json", (err, data) => {
            if(err) throw err;
-           let newData = JSON.parse(data);
-           console.log(newData);
-           fs.writeFile("db/db.json", JSON.stringify(userNote, null, 3),() => {
+           userArray = JSON.parse(data);
+           userArray.push(userNote);
+           console.log(userArray);
+           res.json(userNote);     
+           fs.writeFile("db/db.json", JSON.stringify(userArray),(err) => {
+               if(err)throw err;
                console.log("success");
              
-           })
-
-       })
-
-       res.json(userNote);
-        
-    })
+           });
+       });
+       
+    });
 }

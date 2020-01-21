@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+
 module.exports = function (app) {
 
     app.get("/api/notes", (req, res) => {
@@ -9,22 +10,61 @@ module.exports = function (app) {
         });
     });
 
+    
+    //Create New Note
     app.post("/api/notes", function (req, res) {
         let userArray = [];
         let userNote = req.body;
-
+    
         fs.readFile("db/db.json", (err, data) => {
             if (err) throw err;
             userArray = JSON.parse(data);
-            userArray.push(userNote);
-            console.log(userArray);
-            res.json(userNote);
-            fs.writeFile("db/db.json", JSON.stringify(userArray), (err) => {
-                if (err) throw err;
-                console.log("success");
-
+            
+                if(userArray === 0){
+                   let id = 0;
+                   
+                   
+               }
+               if(userArray.length > 0){
+                   let newLength = userArray.length;
+                   userNote.id = userArray[newLength - 1].id + 1;
+               }
+               else{
+                   id = 0;
+               }
+               userNote.id = id += 1;
+               userArray.push(userNote);
+               
+               fs.writeFile("db/db.json", JSON.stringify(userArray, null, 2), (err) => {
+                   if (err) throw err;
+                   console.log("success");
+                   
             });
         });
+      
+        res.json(userNote);
+    });
+
+    //Delete Note
+
+    app.delete("/api/notes/:id",  (req, res) => {
+        let selected = parseInt(req.params.id);
+      console.log(selected);
+      
+        fs.readFile("db/db.json", (err, data) => {
+            if (err) throw err;
+           userArray = JSON.parse(data);
+
+       for(let i = 0; i < userArray.length; i++){
+        
+           if(selected === userArray[i].id){
+               res.json(userArray.splice(i , 1));
+           }
+       }
+       fs.writeFile("db/db.json", JSON.stringify(userArray, null, 2), (err) => {
+           if (err) throw err;
+       })
 
     });
+});
 }

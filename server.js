@@ -1,12 +1,11 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const path = require('path');
 const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+//Importing get/post/delet functions
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 

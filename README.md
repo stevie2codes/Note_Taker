@@ -5,3 +5,18 @@ An application that can be used to write, save, and delete notes. This applicati
 
 ![Preview](public/assets/images/main_page.png)
 ![Preview2](public/assets/images/note_page.png)
+
+## Built With
+* JavaScript
+* jQuery
+* Node 
+* Express
+* Html / CSS
+
+### Author note
+
+This application was an exercise in setting up 
+a server with express and creating routes while implementing Get, Post, Delete functionality. 
+
+
+
